@@ -1,23 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
+import { APIProvider, Map } from '@vis.gl/react-google-maps';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="header">
+      <p className="titleText">
+        Vision 2026
+      </p>
+      <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+        <Map
+          style={{width: '100vw', height: '100vh'}}
+          defaultCenter={{lat:37.271032928849145, lng:-76.71531100979759}}
+          defaultZoom={17}
+          gestureHandling={'greedy'}
+          disableDefaultUI={true}
+        />
+      </APIProvider>
     </div>
   );
 }
