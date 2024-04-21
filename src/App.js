@@ -1,9 +1,9 @@
-import { Flex, Text } from '@chakra-ui/react';
-import './App.css';
+import { Flex } from '@chakra-ui/react';
 import Map from './Map';
 import Stats from './Stats';
 import { useState } from 'react';
 import Actions from './Actions';
+import Calendar from './Calendar';
 
 function App() {
   const [locations, setLocations] = useState([
@@ -17,22 +17,21 @@ function App() {
     ["Sunken Garden", false, 1000000, -25, [{lat: 37.271195, lng:-76.709330}, {lat: 37.271195, lng:-76.712164}, {lat: 37.270481, lng:-76.712164}, {lat: 37.270481, lng:-76.709330}]],
   ])
 
+  const [month, setMonth] = useState(50)
+  const [usedAction, setUsedAction] = useState(false)
+
   const [funds, setFunds] = useState(120000000)
   const [rating, setRating] = useState(100)
   const [students, setStudents] = useState(8000)
   const [tuition, setTuition] = useState(15000)
 
   return (
-    <Flex className="background" padding="10px" maxHeight="100vh" maxWidth="100vw" overflow="hidden">
-      <Flex justifyContent="left">
-        <Text className="titleText" marginLeft="35px">
-          Vision 2030
-        </Text>
-      </Flex>
+    <Flex flexDirection="column" fontFamily="Palatino Linotype" backgroundColor="#B9975B" padding="10px" height="100vh" width="100vw" overflow="hidden">
+      <Calendar month={month} setMonth={setMonth} setUsedAction={setUsedAction} funds={funds} setFunds={setFunds} students={students} tuition={tuition}/>
       <Flex flex="1" alignItems="stretch" justifyContent="space-evenly">
         <Stats funds={funds} rating={rating} students={students} tuition={tuition}/>
         <Map locations={locations} setLocations={setLocations}/>
-        <Actions locations={locations} setLocations={setLocations} funds={funds} setFunds={setFunds} rating={rating} setRating={setRating} students={students} setStudents={setStudents} tuition={tuition} setTuition={setTuition}/>
+        <Actions locations={locations} setLocations={setLocations} usedAction={usedAction} setUsedAction={setUsedAction} funds={funds} setFunds={setFunds} rating={rating} setRating={setRating} students={students} setStudents={setStudents} tuition={tuition} setTuition={setTuition}/>
       </Flex>
     </Flex>
   )

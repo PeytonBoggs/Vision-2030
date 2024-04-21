@@ -1,11 +1,12 @@
 import { Button, CircularProgress, CircularProgressLabel, Flex, Tab, TabList, TabPanel, TabPanels, Table, TableContainer, Tabs, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 
-export default function Actions({ locations, setLocations, funds, setFunds, rating, setRating, students, setStudents, tuition, setTuition }) {    
+export default function Actions({ locations, setLocations, usedAction, setUsedAction, funds, setFunds, rating, setRating, students, setStudents, tuition, setTuition }) {    
     function handleAction(changeInFunds, changeInRating, changeInStudents, changeInTuition) {
         setFunds(funds + changeInFunds)
         setRating(rating + changeInRating)
         setStudents(students * changeInStudents)
         setTuition(tuition * changeInTuition)
+        setUsedAction(true)
     }
     
     const construct = (selectedLocation) => {
@@ -60,7 +61,7 @@ export default function Actions({ locations, setLocations, funds, setFunds, rati
                                 <Tbody>
                                     <Tr>
                                         <Td>
-                                            <Button backgroundColor="#D5D8DB" onClick={() => handleAction(0, -5, 1.1, 1)}>
+                                            <Button backgroundColor="#D5D8DB" onClick={() => handleAction(0, -5, 1.1, 1)} isDisabled={usedAction}>
                                                 Raise Acceptance Rate
                                             </Button>
                                         </Td>
@@ -68,7 +69,7 @@ export default function Actions({ locations, setLocations, funds, setFunds, rati
                                     </Tr>   
                                     <Tr>
                                         <Td>
-                                            <Button backgroundColor="#D5D8DB" onClick={() => handleAction(0, 20, 1, 1)}>
+                                            <Button backgroundColor="#D5D8DB" onClick={() => handleAction(0, 20, 1, 1)} isDisabled={usedAction}>
                                                 Meet with Students
                                             </Button>
                                         </Td>
@@ -76,7 +77,7 @@ export default function Actions({ locations, setLocations, funds, setFunds, rati
                                     </Tr>
                                     <Tr>
                                         <Td>
-                                            <Button backgroundColor="#D5D8DB" onClick={() => handleAction(0, 5, 1.05, 1.05)}>
+                                            <Button backgroundColor="#D5D8DB" onClick={() => handleAction(0, 5, 1.05, 1.05)} isDisabled={usedAction}>
                                                 Visit High Schools
                                             </Button>
                                         </Td>
@@ -84,7 +85,7 @@ export default function Actions({ locations, setLocations, funds, setFunds, rati
                                     </Tr>
                                     <Tr>
                                         <Td>
-                                            <Button backgroundColor="#D5D8DB" onClick={() => handleAction(0, -10, 1, 1.15)}>
+                                            <Button backgroundColor="#D5D8DB" onClick={() => handleAction(0, -10, 1, 1.15)} isDisabled={usedAction}>
                                                 Raise Tuition
                                             </Button>
                                         </Td>
@@ -92,7 +93,7 @@ export default function Actions({ locations, setLocations, funds, setFunds, rati
                                     </Tr>
                                     <Tr>
                                         <Td>
-                                            <Button backgroundColor="#D5D8DB" onClick={() => handleAction(-100000, 0, 1, 1)}>
+                                            <Button backgroundColor="#D5D8DB" onClick={() => handleAction(-100000, 0, 1, 1)} isDisabled={usedAction}>
                                                 Buy a Tesla
                                             </Button>
                                         </Td>
@@ -122,7 +123,7 @@ export default function Actions({ locations, setLocations, funds, setFunds, rati
                                                 </CircularProgress>
                                             </Td>
                                             <Td>
-                                                <Button backgroundColor="#D5D8DB" onClick={() => construct(location)} isDisabled={location[1] || (funds - location[2] < 0)}>
+                                                <Button backgroundColor="#D5D8DB" onClick={() => construct(location)} isDisabled={location[1] || (funds - location[2] < 0) || (rating + location[3]) <= 0}>
                                                     {formatter.format(location[2])}
                                                 </Button>
                                             </Td>
