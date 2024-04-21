@@ -1,15 +1,9 @@
-import { Button, CircularProgress, CircularProgressLabel, Flex, Tab, TabList, TabPanel, TabPanels, Table, TableContainer, Tabs, Tbody, Td, Th, Thead, Tr, useToast } from "@chakra-ui/react";
+import { Button, CircularProgress, CircularProgressLabel, Flex, Image, Tab, TabList, TabPanel, TabPanels, Table, TableContainer, Tabs, Tbody, Td, Th, Thead, Tr, useToast } from "@chakra-ui/react";
+import { useState } from "react";
 
 export default function Actions({ locations, setLocations, usedAction, setUsedAction, funds, setFunds, rating, setRating, students, setStudents, tuition, setTuition, setWon }) {    
+    const [secret, setSecret] = useState(true)
     const toast = useToast()
-
-    function handleAction(changeInFunds, changeInRating, changeInStudents, changeInTuition) {
-        setFunds(funds + changeInFunds)
-        setRating(rating + changeInRating)
-        setStudents(students * changeInStudents)
-        setTuition(tuition * changeInTuition)
-        setUsedAction(true)
-    }
     
     const construct = (selectedLocation) => {
         const updatedLocations = locations.map(location => {
@@ -40,6 +34,32 @@ export default function Actions({ locations, setLocations, usedAction, setUsedAc
                 duration: 10000
             })
         }
+    }
+
+    function handleAction(changeInFunds, changeInRating, changeInStudents, changeInTuition) {
+        setFunds(funds + changeInFunds)
+        setRating(rating + changeInRating)
+        setStudents(students * changeInStudents)
+        setTuition(tuition * changeInTuition)
+        setUsedAction(true)
+    }
+
+    function getSecret() {
+        if (secret) {
+            return(
+                <Tr>
+                    <Td>
+                        <Button backgroundColor="#D5D8DB" onClick={() => setSecret(false)} isDisabled={usedAction}>
+                            Secret
+                        </Button>
+                    </Td>
+                    <Td whiteSpace="normal">shhhhhh</Td>
+                </Tr>  
+            )
+        }
+        return (
+            <Image boxSize="100px" src="clawdius.png" marginLeft="20px"></Image>
+        )
     }
 
     const formatter = new Intl.NumberFormat('en-US', {
@@ -118,7 +138,8 @@ export default function Actions({ locations, setLocations, usedAction, setUsedAc
                                             </Button>
                                         </Td>
                                         <Td whiteSpace="normal">-$100,000. Worth it.</Td>
-                                    </Tr>                                    
+                                    </Tr>
+                                    {getSecret()}                                    
                                 </Tbody>
                             </Table>
                         </TableContainer>
