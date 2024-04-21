@@ -57,7 +57,7 @@ export default function Actions({ locations, setLocations, usedAction, setUsedAc
     }
 
     return(
-        <Flex background="#9e7d43" borderRadius="20px" height="85vh" width="30vw">
+        <Flex background="#9e7d43" borderRadius="20px" height="85vh" width="35%">
             <Tabs overflowY="auto" colorScheme="blackAlpha">
                 <TabList>
                     <Tab>

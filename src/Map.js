@@ -1,18 +1,37 @@
 import { APIProvider, Map } from '@vis.gl/react-google-maps';
 import { Polygon } from './Polygon.ts';
-import { Flex } from '@chakra-ui/react';
+import { Flex, useToast } from '@chakra-ui/react';
 
 export default function WMap({ locations, setLocations }) {
-    const changeConstruction = (clickedLocation) => {
-        const updatedLocations = locations.map(location => {
-            if (location[0] === clickedLocation[0]) {
-                return [location[0], !location[1], location[2]];
-            }
-            return location;
-        })
-        setLocations(updatedLocations);
-    }
+    const toast = useToast()
 
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+    })
+
+    function handleClick(location) {
+        if (location[1]) {
+            toast({
+                title: location[0] + " under construction",
+                description: "Cost: " + formatter.format(location[2]) + ", Approval Rating: " + location[3] + "%",
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+              })
+        } else {
+            toast({
+                title: location[0] + " not under construction",
+                description: "Cost: " + formatter.format(location[2]) + ", Approval Rating: " + location[3] + "%",
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+              })
+        }
+    }
+    
     return (
         <Flex justifyContent="space-evenly" alignItems="center" background="#9e7d43" borderRadius="20px" padding="10px">
             <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
@@ -27,7 +46,7 @@ export default function WMap({ locations, setLocations }) {
                     <Polygon
                         key={index}
                         paths={location[4]}
-                        onClick={() => changeConstruction(location)}
+                        onClick={() => handleClick(location)}
                         fillColor={location[1] ? "#E63A37" : "#6a6a6a"}
                         strokeColor={location[1] ? "#DA1E1B" : "#000000"}
                     />
