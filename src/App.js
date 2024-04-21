@@ -7,29 +7,32 @@ import Actions from './Actions';
 
 function App() {
   const [locations, setLocations] = useState([
-    ["Wren Building", false, 1000000, -50, [{lat: 37.270894, lng:-76.707451}, {lat: 37.271889, lng:-76.709330}, {lat: 37.269840, lng:-76.709330}]],
-    ["Tucker Hall", false, 100000, -10, [{lat: 37.271889, lng:-76.709330}, {lat: 37.271889, lng:-76.710365}, {lat: 37.271195, lng:-76.710367}, {lat: 37.271195, lng:-76.709330}]],
-    ["Chancellors Hall", false, 350000, -20, [{lat: 37.271889, lng:-76.710365}, {lat: 37.271889, lng:-76.711292}, {lat: 37.271195, lng:-76.711292}, {lat: 37.271195, lng:-76.710367}]],
-    ["James Blair Hall", false, 150000, -15, [{lat: 37.271889, lng:-76.711292}, {lat: 37.271889, lng:-76.712164}, {lat: 37.271195, lng:-76.712164}, {lat: 37.271195, lng:-76.711292}]],
-    ["Ewell Hall", false, 50000, -5, [{lat: 37.269840, lng:-76.709330}, {lat: 37.269840, lng:-76.710365}, {lat: 37.270481, lng:-76.710365}, {lat: 37.270481, lng:-76.709330}]],
-    ["Washington Hall", false, 100000, -10, [{lat: 37.269840, lng:-76.710365}, {lat: 37.269840, lng:-76.711292}, {lat: 37.270481, lng:-76.711292}, {lat: 37.270481, lng:-76.710365}]],
-    ["McGlothlin-Street Hall", false, 200000, 10, [{lat: 37.269840, lng:-76.711292}, {lat: 37.270481, lng:-76.711292}, {lat: 37.270481, lng:-76.712164}, {lat: 37.269840, lng:-76.712164}]],
-    ["Sunken Garden", false, 10000, -25, [{lat: 37.271195, lng:-76.709330}, {lat: 37.271195, lng:-76.712164}, {lat: 37.270481, lng:-76.712164}, {lat: 37.270481, lng:-76.709330}]],
+    ["Wren Building", false, 100000000, -50, [{lat: 37.270894, lng:-76.707451}, {lat: 37.271889, lng:-76.709330}, {lat: 37.269840, lng:-76.709330}]],
+    ["Tucker Hall", false, 10000000, -10, [{lat: 37.271889, lng:-76.709330}, {lat: 37.271889, lng:-76.710365}, {lat: 37.271195, lng:-76.710367}, {lat: 37.271195, lng:-76.709330}]],
+    ["Chancellors Hall", false, 35000000, -20, [{lat: 37.271889, lng:-76.710365}, {lat: 37.271889, lng:-76.711292}, {lat: 37.271195, lng:-76.711292}, {lat: 37.271195, lng:-76.710367}]],
+    ["James Blair Hall", false, 15000000, -15, [{lat: 37.271889, lng:-76.711292}, {lat: 37.271889, lng:-76.712164}, {lat: 37.271195, lng:-76.712164}, {lat: 37.271195, lng:-76.711292}]],
+    ["Ewell Hall", false, 5000000, -5, [{lat: 37.269840, lng:-76.709330}, {lat: 37.269840, lng:-76.710365}, {lat: 37.270481, lng:-76.710365}, {lat: 37.270481, lng:-76.709330}]],
+    ["Washington Hall", false, 10000000, -10, [{lat: 37.269840, lng:-76.710365}, {lat: 37.269840, lng:-76.711292}, {lat: 37.270481, lng:-76.711292}, {lat: 37.270481, lng:-76.710365}]],
+    ["McGlothlin-Street Hall", false, 20000000, 10, [{lat: 37.269840, lng:-76.711292}, {lat: 37.270481, lng:-76.711292}, {lat: 37.270481, lng:-76.712164}, {lat: 37.269840, lng:-76.712164}]],
+    ["Sunken Garden", false, 1000000, -25, [{lat: 37.271195, lng:-76.709330}, {lat: 37.271195, lng:-76.712164}, {lat: 37.270481, lng:-76.712164}, {lat: 37.270481, lng:-76.709330}]],
   ])
-  const [funds, setFunds] = useState(1000000)
+
+  const [funds, setFunds] = useState(120000000)
   const [rating, setRating] = useState(100)
+  const [students, setStudents] = useState(8000)
+  const [tuition, setTuition] = useState(15000)
 
   return (
     <Flex className="background" padding="10px" maxHeight="100vh" maxWidth="100vw" overflow="hidden">
-      <Flex justifyContent="center">
-        <Text className="titleText">
+      <Flex justifyContent="left">
+        <Text className="titleText" marginLeft="35px">
           Vision 2030
         </Text>
       </Flex>
       <Flex flex="1" alignItems="stretch" justifyContent="space-evenly">
-        <Stats funds={funds} rating={rating}/>
+        <Stats funds={funds} rating={rating} students={students} tuition={tuition}/>
         <Map locations={locations} setLocations={setLocations}/>
-        <Actions locations={locations}/>
+        <Actions locations={locations} setLocations={setLocations} funds={funds} setFunds={setFunds} rating={rating} setRating={setRating} students={students} setStudents={setStudents} tuition={tuition} setTuition={setTuition}/>
       </Flex>
     </Flex>
   )

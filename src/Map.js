@@ -14,10 +14,10 @@ export default function WMap({ locations, setLocations }) {
     }
 
     return (
-        <Flex justifyContent="space-evenly" alignItems="center">
+        <Flex justifyContent="space-evenly" alignItems="center" background="#9e7d43" borderRadius="20px" padding="10px">
             <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
                 <Map
-                style={{width: '50vw', height: '80vh'}}
+                style={{width: '40vw', height: '80vh'}}
                 defaultCenter={{lat:37.271032928849145, lng:-76.71531100979759}}
                 defaultZoom={16}
                 gestureHandling={"greedy"}
