@@ -10,7 +10,7 @@ export default function Stats({ funds, rating }) {
 
     function getColor() {
         if (rating > 66) {
-            return "green"
+            return "#115740"
         } else if (rating > 33) {
             return "orange"
         } else {
