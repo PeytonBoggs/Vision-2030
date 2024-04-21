@@ -2,12 +2,6 @@ import { useState } from 'react';
 import { APIProvider, Map } from '@vis.gl/react-google-maps';
 import { Polygon } from './Polygon.ts';
 
-function Location(name, construction, path) {
-    this.name = name;
-    this.construction = construction;
-    this.path = path;
-}
-
 export default function WMap() {
 
     const [locations, setLocations] = useState([
@@ -23,7 +17,7 @@ export default function WMap() {
 
     const changeConstruction = (clickedLocation) => {
         const updatedLocations = locations.map(location => {
-            if (location[0] == clickedLocation[0]) {
+            if (location[0] === clickedLocation[0]) {
                 return [location[0], !location[1], location[2]];
             }
             return location;
