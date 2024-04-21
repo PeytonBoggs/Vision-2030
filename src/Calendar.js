@@ -1,7 +1,7 @@
 import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Button, Flex, Image, Text, useDisclosure, useToast } from "@chakra-ui/react"
 import React from "react"
 
-export default function Calendar({ month, setMonth, setUsedAction, funds, setFunds, students, tuition }) {
+export default function Calendar({ month, setMonth, setUsedAction, funds, setFunds, students, tuition, won }) {
     const toast = useToast()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = React.useRef()
@@ -15,7 +15,7 @@ export default function Calendar({ month, setMonth, setUsedAction, funds, setFun
             newSemester();
         }
 
-        if (month == 59) {
+        if (month == 59 && !won) {
             toast({
                 title: "Game Over",
                 description: "It's 2030, and William & Mary is not entirely under construction! You can still play in endless mode.",
@@ -44,37 +44,6 @@ export default function Calendar({ month, setMonth, setUsedAction, funds, setFun
             })
         }
     }
-
-    // function LoseAlert() {
-    //     const { isOpen, onOpen, onClose } = useDisclosure()
-    //     const cancelRef = React.useRef()
-
-    //     if (month == 59) {
-    //         isOpen = true;
-    //     }
-
-    //     return (
-    //         <>
-    //             <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
-    //                 <AlertDialogOverlay>
-    //                     <AlertDialogContent>
-    //                         <AlertDialogHeader>
-    //                             Game Over
-    //                         </AlertDialogHeader>
-    //                         <AlertDialogBody>
-    //                             It's January 2030 and William & Mary isn't all under construction!
-    //                         </AlertDialogBody>
-    //                         <AlertDialogFooter>
-    //                             <Button ref={cancelRef} onClick={onClose}>
-    //                                 Endless Mode
-    //                             </Button>
-    //                         </AlertDialogFooter>
-    //                     </AlertDialogContent>
-    //                 </AlertDialogOverlay>
-    //             </AlertDialog>
-    //         </>
-    //     )
-    // }
 
     return (
         <Flex alignItems="center" justifyContent="space-evenly" marginBottom="10px">

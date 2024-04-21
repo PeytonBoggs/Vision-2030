@@ -15,6 +15,7 @@ function App() {
     ["Washington Hall", false, 10000000, -10, [{lat: 37.269840, lng:-76.710365}, {lat: 37.269840, lng:-76.711292}, {lat: 37.270481, lng:-76.711292}, {lat: 37.270481, lng:-76.710365}]],
     ["McGlothlin-Street Hall", false, 20000000, 10, [{lat: 37.269840, lng:-76.711292}, {lat: 37.270481, lng:-76.711292}, {lat: 37.270481, lng:-76.712164}, {lat: 37.269840, lng:-76.712164}]],
     ["Sunken Garden", false, 1000000, -25, [{lat: 37.271195, lng:-76.709330}, {lat: 37.271195, lng:-76.712164}, {lat: 37.270481, lng:-76.712164}, {lat: 37.270481, lng:-76.709330}]],
+    ["Monroe Hall", true, 0, 0, [{lat: 37.271889, lng:-76.709330}, {lat: 37.272617, lng:-76.710849}, {lat: 37.271889, lng:-76.710849}]],
   ])
 
   const [month, setMonth] = useState(50)
@@ -25,13 +26,15 @@ function App() {
   const [students, setStudents] = useState(8000)
   const [tuition, setTuition] = useState(15000)
 
+  const [won, setWon] = useState(false)
+
   return (
     <Flex flexDirection="column" fontFamily="Palatino Linotype" backgroundColor="#B9975B" padding="10px" height="100vh" width="100vw" overflow="hidden">
-      <Calendar month={month} setMonth={setMonth} setUsedAction={setUsedAction} funds={funds} setFunds={setFunds} students={students} tuition={tuition}/>
+      <Calendar month={month} setMonth={setMonth} setUsedAction={setUsedAction} funds={funds} setFunds={setFunds} students={students} tuition={tuition} won={won} />
       <Flex flex="1" alignItems="stretch" justifyContent="space-evenly">
         <Stats funds={funds} rating={rating} students={students} tuition={tuition}/>
         <Map locations={locations} setLocations={setLocations}/>
-        <Actions locations={locations} setLocations={setLocations} usedAction={usedAction} setUsedAction={setUsedAction} funds={funds} setFunds={setFunds} rating={rating} setRating={setRating} students={students} setStudents={setStudents} tuition={tuition} setTuition={setTuition}/>
+        <Actions locations={locations} setLocations={setLocations} usedAction={usedAction} setUsedAction={setUsedAction} funds={funds} setFunds={setFunds} rating={rating} setRating={setRating} students={students} setStudents={setStudents} tuition={tuition} setTuition={setTuition} setWon={setWon}/>
       </Flex>
     </Flex>
   )

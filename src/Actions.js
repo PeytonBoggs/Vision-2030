@@ -1,6 +1,8 @@
-import { Button, CircularProgress, CircularProgressLabel, Flex, Tab, TabList, TabPanel, TabPanels, Table, TableContainer, Tabs, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { Button, CircularProgress, CircularProgressLabel, Flex, Tab, TabList, TabPanel, TabPanels, Table, TableContainer, Tabs, Tbody, Td, Th, Thead, Tr, useToast } from "@chakra-ui/react";
 
-export default function Actions({ locations, setLocations, usedAction, setUsedAction, funds, setFunds, rating, setRating, students, setStudents, tuition, setTuition }) {    
+export default function Actions({ locations, setLocations, usedAction, setUsedAction, funds, setFunds, rating, setRating, students, setStudents, tuition, setTuition, setWon }) {    
+    const toast = useToast()
+
     function handleAction(changeInFunds, changeInRating, changeInStudents, changeInTuition) {
         setFunds(funds + changeInFunds)
         setRating(rating + changeInRating)
@@ -20,8 +22,26 @@ export default function Actions({ locations, setLocations, usedAction, setUsedAc
         setLocations(updatedLocations);
         setFunds(funds - selectedLocation[2])
         setRating(rating + selectedLocation[3])
+        
+        let won = true
+
+        for (let i = 0; i < updatedLocations.length; i++) {
+            if (!updatedLocations[i][1]) {
+                won = false
+            }
+        }
+
+        if (won) {
+            setWon(true)
+            toast({
+                title: "You did it!",
+                description: "Before 2030, William & Mary is entirely under construction! Congratulations!",
+                status: "success",
+                duration: 10000
+            })
+        }
     }
-    
+
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
@@ -115,6 +135,7 @@ export default function Actions({ locations, setLocations, usedAction, setUsedAc
                                 </Thead>
                                 <Tbody>
                                     {locations.map((location, index) => (
+                                        !location[1] ? (
                                         <Tr key={index}>
                                             <Td>{location[0]}</Td>
                                             <Td>
@@ -128,6 +149,7 @@ export default function Actions({ locations, setLocations, usedAction, setUsedAc
                                                 </Button>
                                             </Td>
                                         </Tr>
+                                        ) : null
                                     ))}
                                 </Tbody>
                             </Table>
