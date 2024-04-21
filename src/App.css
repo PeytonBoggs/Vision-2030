@@ -1,13 +1,12 @@
-.header {
+.background {
   background-color: #B9975B;
   min-height: 100vh;
-  display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  font-family: Palatino Linotype;
 }
 
 .titleText {
   color: #115740;
+  font-size: 300%;
   font-weight: bold;
 }
