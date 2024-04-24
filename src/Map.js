@@ -33,7 +33,7 @@ export default function WMap({ locations, setLocations }) {
     }
     
     return (
-        <Flex justifyContent="space-evenly" alignItems="center" background="#9e7d43" borderRadius="20px" padding="10px">
+        <Flex justifyContent="space-evenly" alignItems="center" background="#9e7d43" borderRadius="1rem" padding="0.5rem" marginX="0.5rem">
             <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
                 <Map
                 style={{width: '40vw', height: '80vh'}}

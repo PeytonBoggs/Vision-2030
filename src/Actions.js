@@ -1,8 +1,6 @@
-import { Button, CircularProgress, CircularProgressLabel, Flex, Image, Tab, TabList, TabPanel, TabPanels, Table, TableContainer, Tabs, Tbody, Td, Th, Thead, Tr, useToast } from "@chakra-ui/react";
-import { useState } from "react";
+import { Button, CircularProgress, CircularProgressLabel, Flex, Tab, TabList, TabPanel, TabPanels, Table, TableContainer, Tabs, Tbody, Td, Th, Thead, Tr, useToast } from "@chakra-ui/react";
 
-export default function Actions({ locations, setLocations, usedAction, setUsedAction, funds, setFunds, rating, setRating, students, setStudents, tuition, setTuition, setWon }) {    
-    const [secret, setSecret] = useState(true)
+export default function Actions({ locations, setLocations, usedAction, setUsedAction, funds, setFunds, rating, setRating, students, setStudents, tuition, setTuition, month, setWon }) {    
     const toast = useToast()
     
     const construct = (selectedLocation) => {
@@ -13,9 +11,9 @@ export default function Actions({ locations, setLocations, usedAction, setUsedAc
             return location;
         })
 
-        setLocations(updatedLocations);
+        setLocations(updatedLocations)
         setFunds(funds - selectedLocation[2])
-        setRating(rating + selectedLocation[3])
+        updateRating(selectedLocation[3])
         
         let won = true
 
@@ -27,39 +25,40 @@ export default function Actions({ locations, setLocations, usedAction, setUsedAc
 
         if (won) {
             setWon(true)
-            toast({
-                title: "You did it!",
-                description: "Before 2030, William & Mary is entirely under construction! Congratulations!",
-                status: "success",
-                duration: 10000
-            })
+            if (month < 59) {
+                toast({
+                    title: "You did it!",
+                    description: "Before 2030, William & Mary is entirely under construction! Congratulations!",
+                    status: "success",
+                    duration: 10000
+                })
+            } else {
+                toast({
+                    title: "You did it!",
+                    description: "Even though you missed your deadline, William & Mary is now entirely under construction! Congratulations!",
+                    status: "success",
+                    duration: 10000
+                })
+            }
         }
     }
 
     function handleAction(changeInFunds, changeInRating, changeInStudents, changeInTuition) {
         setFunds(funds + changeInFunds)
-        setRating(rating + changeInRating)
+        updateRating(changeInRating)
         setStudents(students * changeInStudents)
         setTuition(tuition * changeInTuition)
         setUsedAction(true)
     }
 
-    function getSecret() {
-        if (secret) {
-            return(
-                <Tr>
-                    <Td>
-                        <Button backgroundColor="#D5D8DB" onClick={() => setSecret(false)} isDisabled={usedAction}>
-                            Secret
-                        </Button>
-                    </Td>
-                    <Td whiteSpace="normal">shhhhhh</Td>
-                </Tr>  
-            )
+    function updateRating(change) {
+        if (rating + change > 100) {
+            setRating(100)
+        } else if (rating + change < 0) {
+            setRating(0)
+        } else {
+            setRating(rating + change)
         }
-        return (
-            <Image boxSize="100px" src="clawdius.png" marginLeft="20px"></Image>
-        )
     }
 
     const formatter = new Intl.NumberFormat('en-US', {
@@ -71,13 +70,13 @@ export default function Actions({ locations, setLocations, usedAction, setUsedAc
 
     function getColor(rating) {
         if (rating < 0) {
-            return "#F53F3B";
+            return "#BF0000";
         }
         return "#115740"
     }
 
     return(
-        <Flex background="#9e7d43" borderRadius="20px" height="85vh" width="35%">
+        <Flex background="#9e7d43" borderRadius="1rem" height="83vh" width="32vw">
             <Tabs overflowY="auto" colorScheme="blackAlpha">
                 <TabList>
                     <Tab>
@@ -92,7 +91,7 @@ export default function Actions({ locations, setLocations, usedAction, setUsedAc
                     <TabPanel>
                         <TableContainer>
                             <Table colorScheme="blackAlpha" size="sm">
-                                <Thead>
+                                <Thead position="sticky">
                                     <Tr>
                                         <Th>Action</Th>
                                         <Th>Effect</Th>
@@ -101,12 +100,12 @@ export default function Actions({ locations, setLocations, usedAction, setUsedAc
                                 <Tbody>
                                     <Tr>
                                         <Td>
-                                            <Button backgroundColor="#D5D8DB" onClick={() => handleAction(0, -5, 1.1, 1)} isDisabled={usedAction}>
-                                                Raise Acceptance Rate
+                                            <Button backgroundColor="#D5D8DB" onClick={() => handleAction(250000000, -5, 1, 1)} isDisabled={usedAction}>
+                                                Ask for Donations
                                             </Button>
                                         </Td>
-                                        <Td whiteSpace="normal">Fight for a higher acceptance rate, increasing student body by 10%. -5% approval rating.</Td>
-                                    </Tr>   
+                                        <Td whiteSpace="normal">Send out emails to all alumni. Some donate, some block you. $250,000,000 added to funds, -5% approval rating.</Td>
+                                    </Tr>
                                     <Tr>
                                         <Td>
                                             <Button backgroundColor="#D5D8DB" onClick={() => handleAction(0, 20, 1, 1)} isDisabled={usedAction}>
@@ -117,19 +116,27 @@ export default function Actions({ locations, setLocations, usedAction, setUsedAc
                                     </Tr>
                                     <Tr>
                                         <Td>
+                                            <Button backgroundColor="#D5D8DB" onClick={() => handleAction(0, -15, 1.15, 1)} isDisabled={usedAction}>
+                                                Raise Acceptance Rate
+                                            </Button>
+                                        </Td>
+                                        <Td whiteSpace="normal">Fight for a higher acceptance rate, increasing student body by 15%. -15% approval rating.</Td>
+                                    </Tr>   
+                                    <Tr>
+                                        <Td>
+                                            <Button backgroundColor="#D5D8DB" onClick={() => handleAction(0, -10, 1, 1.1)} isDisabled={usedAction}>
+                                                Raise Tuition
+                                            </Button>
+                                        </Td>
+                                        <Td whiteSpace="normal">Meet the Board of Visitors and encourage a tuition hike. +10% tuition, -10% approval rating.</Td>
+                                    </Tr>
+                                    <Tr>
+                                        <Td>
                                             <Button backgroundColor="#D5D8DB" onClick={() => handleAction(0, 5, 1.05, 1.05)} isDisabled={usedAction}>
                                                 Visit High Schools
                                             </Button>
                                         </Td>
-                                        <Td whiteSpace="normal">Encourage more high school seniors to apply. The acceptance pool rises, W&M gets more competative, and tuition can be raised. +5% approval rating, students, and tuition.</Td>
-                                    </Tr>
-                                    <Tr>
-                                        <Td>
-                                            <Button backgroundColor="#D5D8DB" onClick={() => handleAction(0, -10, 1, 1.15)} isDisabled={usedAction}>
-                                                Raise Tuition
-                                            </Button>
-                                        </Td>
-                                        <Td whiteSpace="normal">Meet the Board of Visitors and encourage a tuition hike. +15% tuition, -10% approval rating.</Td>
+                                        <Td whiteSpace="normal">The acceptance pool rises, W&M gets more competative, and tuition can be raised. +5% students, approval rating, and tuition.</Td>
                                     </Tr>
                                     <Tr>
                                         <Td>
@@ -139,7 +146,6 @@ export default function Actions({ locations, setLocations, usedAction, setUsedAc
                                         </Td>
                                         <Td whiteSpace="normal">-$100,000. Worth it.</Td>
                                     </Tr>
-                                    {getSecret()}                                    
                                 </Tbody>
                             </Table>
                         </TableContainer>
@@ -147,7 +153,7 @@ export default function Actions({ locations, setLocations, usedAction, setUsedAc
                     <TabPanel>
                         <TableContainer>
                             <Table colorScheme="blackAlpha" size="sm">
-                                <Thead>
+                                <Thead position="sticky">
                                     <Tr>
                                         <Th>Location</Th>
                                         <Th>Approval</Th>
@@ -164,7 +170,7 @@ export default function Actions({ locations, setLocations, usedAction, setUsedAc
                                                     <CircularProgressLabel>{location[3]}%</CircularProgressLabel>
                                                 </CircularProgress>
                                             </Td>
-                                            <Td>
+                                            <Td flex="1">
                                                 <Button backgroundColor="#D5D8DB" onClick={() => construct(location)} isDisabled={location[1] || (funds - location[2] < 0) || (rating + location[3]) <= 0}>
                                                     {formatter.format(location[2])}
                                                 </Button>
